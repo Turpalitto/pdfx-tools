@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# PROTECTIVE: Commercial logic (DO NOT COMMIT)
+pdfx-ultimate.jsx
+lib/pdf-utils.js
+lib/processing-*.js
+components/ProcessingEngine.js
+.env.local
+.env.production.local
