@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://pdfx.tools"),
   title: "PDF X — Бесплатные онлайн-инструменты для PDF",
   description:
     "Сжимай, объединяй, конвертируй PDF бесплатно. Без серверов — все файлы обрабатываются в браузере. 12 инструментов для работы с PDF.",
@@ -30,7 +31,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PDF X — Бесплатные онлайн-инструменты для PDF",
     description: "Сжимай, объединяй, конвертируй PDF бесплатно. Без серверов.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 

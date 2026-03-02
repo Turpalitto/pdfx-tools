@@ -45,25 +45,10 @@ export default function ToolPage() {
       {/* Tools Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {filteredTools.map((tool) => {
-          const routeMap = {
-            pdf2img: "/pdf-to-image",
-            img2pdf: "/image-to-pdf",
-            merge: "/merge-pdf",
-            compress: "/compress-pdf",
-            rotate: "/rotate-pdf",
-            split: "/split-pdf",
-            watermark: "/watermark-pdf",
-            info: "/analyze-pdf",
-            ocr: "/ocr-pdf",
-            extract: "/extract-text",
-            sign: "/sign-pdf",
-            pagenum: "/page-numbers",
-          };
-          
           return (
             <Link
               key={tool.id}
-              href={routeMap[tool.id] || "/"}
+              href={tool.route || "/"}
               className="group bg-[#0a0a0b] border border-[#161616] rounded-xl p-4 text-center hover:border-[#2a2a2a] hover:bg-[#111] transition-all relative"
             >
               {tool.pro && (
