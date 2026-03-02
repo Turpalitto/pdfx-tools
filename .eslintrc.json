@@ -1,0 +1,37 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
+  },
+  "plugins": ["react", "react-hooks"],
+  "settings": {
+    "react": { "version": "detect" }
+  },
+  "rules": {
+    // ── React ──────────────────────────────────────────────
+    "react/react-in-jsx-scope": "off",     // Не нужен с React 17+
+    "react/prop-types": "off",             // Без TypeScript можно отключить
+    "react/display-name": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+
+    // ── Стиль кода ────────────────────────────────────────
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "prefer-const": "error",
+    "no-var": "error",
+
+    // ── Отключены (мешают быстрой разработке) ─────────────
+    "no-debugger": "warn"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    // ── Обязательные ─────────────────────────────────────
+    "esbenp.prettier-vscode",          // Форматирование
+    "dbaeumer.vscode-eslint",          // Линтинг JS/JSX
+    "dsznajder.es7-react-js-snippets", // Сниппеты React
+
+    // ── Полезные для проекта ──────────────────────────────
+    "bradlc.vscode-tailwindcss",       // IntelliSense для Tailwind
+    "formulahendry.auto-rename-tag",   // Авторенейм JSX тегов
+    "christian-kohler.path-intellisense", // Автодополнение путей
+    "mikestead.dotenv",                // Подсветка .env файлов
+
+    // ── Качество жизни ────────────────────────────────────
+    "usernamehw.errorlens",            // Ошибки inline в коде
+    "streetsidesoftware.code-spell-checker", // Опечатки
+    "pkief.material-icon-theme",       // Иконки файлов
+    "eamodio.gitlens",                 // Git аннотации
+
+    // ── Отладка ────────────────────────────────────────────
+    "ms-edgedevtools.vscode-edge-devtools" // DevTools прямо в VS Code
+  ]
+}
