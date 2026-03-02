@@ -1,14 +1,10 @@
-import { TOOLS } from "../../../lib/tools-config";
-import ToolInterface from "../../../components/ToolInterface";
+import { TOOLS } from "@/lib/tools-config";
+import ToolRoutePage, { buildToolMetadata } from "@/components/ToolRoutePage";
 
 const tool = TOOLS.find((t) => t.id === "merge");
 
-export const metadata = {
-  title: `${tool.title} | PDF X`,
-  description: tool.description,
-  keywords: tool.keywords,
-};
+export const metadata = buildToolMetadata(tool);
 
 export default function MergePDF() {
-  return <ToolInterface tool={tool} />;
+  return <ToolRoutePage tool={tool} />;
 }

@@ -1,20 +1,10 @@
-import { TOOLS } from "../../../lib/tools-config";
+import { TOOLS } from "@/lib/tools-config";
+import ToolRoutePage, { buildToolMetadata } from "@/components/ToolRoutePage";
 
 const tool = TOOLS.find((t) => t.id === "split");
 
-export const metadata = {
-  title: `${tool.title} | PDF X`,
-  description: tool.description,
-  keywords: tool.keywords,
-};
+export const metadata = buildToolMetadata(tool);
 
 export default function SplitPDF() {
-  return (
-    <div className="min-h-screen bg-[#070809] text-[#e8e3db]">
-      <div className="max-w-[940px] mx-auto px-4 py-8">
-        <h1 className="text-3xl font-black mb-4">{tool.label}</h1>
-        <p className="text-[#888] mb-8">{tool.description}</p>
-      </div>
-    </div>
-  );
+  return <ToolRoutePage tool={tool} />;
 }
