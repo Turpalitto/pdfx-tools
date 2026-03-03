@@ -5,6 +5,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AppProviders from "../components/AppProviders";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,9 +69,11 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#070809] text-[#e8e3db] min-h-screen`}>
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <AppProviders>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </AppProviders>
 
         {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
 
