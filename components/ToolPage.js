@@ -58,7 +58,7 @@ export default function ToolPage() {
             PDF без <span className="text-[#ffcf48]">ограничений</span>
           </h1>
           <p className="mt-4 text-sm sm:text-base text-[#9ca6b6] font-mono tracking-wide">
-            // 12 инструментов · всё в браузере · конфиденциально
+            12 инструментов · всё в браузере · конфиденциально
           </p>
         </div>
 

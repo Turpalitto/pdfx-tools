@@ -1,14 +1,27 @@
 export const metadata = {
-  title: "Privacy Policy | PDF X",
+  title: "Политика конфиденциальности | PDF X",
   description:
     "Политика конфиденциальности PDF X: обработка файлов происходит локально в браузере пользователя.",
   alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "website",
+    url: "https://pdfx.tools/privacy",
+    title: "Политика конфиденциальности | PDF X",
+    description: "Как PDF X обрабатывает данные, cookies и файлы пользователей.",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Политика конфиденциальности | PDF X",
+    description: "Условия обработки данных и приватности в PDF X.",
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function PrivacyPage() {
   return (
     <div className="max-w-[940px] mx-auto px-4 py-10">
-      <h1 className="text-3xl font-black mb-6">Privacy Policy</h1>
+      <h1 className="text-3xl font-black mb-6">Политика конфиденциальности</h1>
       <div className="space-y-4 text-sm leading-7 text-[#bbb]">
         <p>
           PDF X уважает конфиденциальность пользователей. Мы не загружаем файлы на наш сервер для обработки базовых

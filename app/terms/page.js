@@ -1,13 +1,26 @@
 export const metadata = {
-  title: "Terms of Service | PDF X",
+  title: "Условия использования | PDF X",
   description: "Условия использования сервиса PDF X.",
   alternates: { canonical: "/terms" },
+  openGraph: {
+    type: "website",
+    url: "https://pdfx.tools/terms",
+    title: "Условия использования | PDF X",
+    description: "Правила и ограничения использования сервиса PDF X.",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Условия использования | PDF X",
+    description: "Правила использования бесплатных и PRO-функций PDF X.",
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function TermsPage() {
   return (
     <div className="max-w-[940px] mx-auto px-4 py-10">
-      <h1 className="text-3xl font-black mb-6">Terms of Service</h1>
+      <h1 className="text-3xl font-black mb-6">Условия использования</h1>
       <div className="space-y-4 text-sm leading-7 text-[#bbb]">
         <p>
           Используя PDF X, вы соглашаетесь с этими условиями. Сервис предоставляется «как есть», без гарантий
