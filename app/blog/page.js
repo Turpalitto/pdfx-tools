@@ -45,17 +45,17 @@ export const metadata = {
 export default function BlogPage() {
   return (
     <div className="max-w-[940px] mx-auto px-4 py-10">
-      <h1 className="text-3xl font-black mb-6">Блог PDF X</h1>
+      <h1 className="text-3xl font-black text-[#1d3150] mb-6">Блог PDF X</h1>
       <div className="space-y-4">
         {posts.map((post) => (
-          <article key={post.slug} className="border border-[#232a36] rounded-xl p-5 bg-[#0b0f15]">
-            <p className="text-xs text-[#8e97a6] mb-2">{post.date}</p>
-            <h2 className="text-xl font-bold mb-2">
-              <Link href={`/blog/${post.slug}`} className="hover:text-[#ffdc50] transition-colors">
+          <article key={post.slug} className="border border-[#d5dfed] rounded-xl p-5 bg-[linear-gradient(180deg,#ffffff,#f8fbff)] shadow-[0_10px_26px_rgba(76,107,153,0.12)]">
+            <p className="text-xs text-[#6d819c] mb-2">{post.date}</p>
+            <h2 className="text-xl font-bold text-[#213650] mb-2">
+              <Link href={`/blog/${post.slug}`} className="hover:text-[#b56d00] transition-colors">
                 {post.title}
               </Link>
             </h2>
-            <p className="text-sm text-[#aab1bd]">{post.excerpt}</p>
+            <p className="text-sm text-[#5f738e]">{post.excerpt}</p>
           </article>
         ))}
       </div>

@@ -68,7 +68,7 @@ export default function RootLayout({
 
   return (
     <html lang="ru">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#070809] text-[#e8e3db] min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-[#111827] min-h-screen`}>
         <AppProviders>
           <Navbar />
           <main className="min-h-screen">{children}</main>

@@ -24,10 +24,10 @@ export const metadata = {
 export default function BlogArticlePage() {
   return (
     <article className="max-w-[820px] mx-auto px-4 py-10">
-      <p className="text-xs text-[#8e97a6] mb-3">02.03.2026</p>
-      <h1 className="text-3xl md:text-4xl font-black mb-6">Как сжать PDF без потери качества</h1>
+      <p className="text-xs text-[#6d819c] mb-3">02.03.2026</p>
+      <h1 className="text-3xl md:text-4xl font-black text-[#1d3150] mb-6">Как сжать PDF без потери качества</h1>
 
-      <div className="space-y-5 text-sm md:text-base leading-7 text-[#bbb]">
+      <div className="space-y-5 text-sm md:text-base leading-7 text-[#4f637f]">
         <p>
           PDF-файлы часто становятся слишком тяжелыми: сканы, фотографии и встроенные шрифты быстро увеличивают размер.
           Из-за этого документ сложно отправить по почте, прикрепить в форму или загрузить в CRM с лимитом 5–10 МБ.
@@ -83,11 +83,11 @@ export default function BlogArticlePage() {
         </p>
       </div>
 
-      <div className="mt-10 rounded-xl border border-[#2b250f] bg-[rgba(255,220,80,0.08)] p-5">
-        <p className="text-sm text-[#d9c372] mb-3">Готово к сжатию?</p>
+      <div className="mt-10 rounded-xl border border-[#f2d6a6] bg-[rgba(255,228,175,0.34)] p-5">
+        <p className="text-sm text-[#7a5a1f] mb-3">Готово к сжатию?</p>
         <Link
           href="/compress-pdf"
-          className="inline-flex bg-[#ffdc50] text-[#070809] font-black px-4 py-2 rounded-lg hover:brightness-110 transition-all"
+          className="inline-flex bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] text-[#2d1d00] font-black px-4 py-2 rounded-lg hover:brightness-105 transition-all"
         >
           Сжать PDF прямо сейчас →
         </Link>

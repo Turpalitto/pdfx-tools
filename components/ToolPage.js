@@ -49,28 +49,28 @@ export default function ToolPage() {
     <div className="relative py-10 md:py-14">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <section className="fade-up rounded-3xl border border-[#253047] bg-[linear-gradient(145deg,rgba(11,14,20,0.92),rgba(8,10,16,0.88))] p-6 sm:p-8 md:p-10 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
+      <section className="fade-up rounded-3xl border border-[#d8e1ee] bg-[linear-gradient(145deg,rgba(255,255,255,0.95),rgba(247,250,255,0.94))] p-6 sm:p-8 md:p-8 shadow-[0_20px_56px_rgba(73,101,144,0.15)]">
         <div className="mx-auto max-w-[760px] text-center">
-          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#33405c] bg-[rgba(14,19,30,0.75)] px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-[#9eb0cf] font-mono">
+          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#d4deee] bg-[#f4f8ff] px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-[#657893] font-mono">
             Browser-First PDF Toolkit
           </p>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[0.98] text-[#f6f2ea]">
-            PDF без <span className="text-[#ffcf48]">ограничений</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[0.98] text-[#17243c]">
+            PDF без <span className="text-[#ffb648]">ограничений</span>
           </h1>
-          <p className="mt-4 text-sm sm:text-base text-[#9ca6b6] font-mono tracking-wide">
+          <p className="mt-3 text-sm sm:text-base text-[#637691] font-mono tracking-wide">
             12 инструментов · всё в браузере · конфиденциально
           </p>
         </div>
 
-        <div className="mt-7 flex flex-wrap justify-center gap-2.5">
+        <div className="mt-6 flex flex-wrap justify-center gap-2.5">
           {CATEGORIES.map((c) => (
             <button
               key={c.id}
               onClick={() => setFilterCat(c.id)}
               className={`rounded-full border px-4 py-2 text-xs font-semibold transition-all ${
                 filterCat === c.id
-                  ? "glow-pulse border-[#43577f] bg-[linear-gradient(180deg,#121a2a,#0d1422)] text-[#f5f0e4]"
-                  : "border-[#2e3b57] bg-[rgba(11,14,20,0.65)] text-[#a7b1c2] hover:border-[#4b5e83] hover:text-[#e9e4d9]"
+                  ? "glow-pulse border-[#8ea8cd] bg-[linear-gradient(180deg,#eef4ff,#e8f0ff)] text-[#1f3a63] shadow-[0_6px_18px_rgba(87,123,176,0.18)]"
+                  : "border-[#d2ddec] bg-[#fbfdff] text-[#60728d] hover:border-[#9cb4d8] hover:text-[#223a5f]"
               }`}
             >
               <span className="mr-1">{c.emoji}</span>
@@ -85,36 +85,36 @@ export default function ToolPage() {
           <Link
             key={tool.id}
             href={tool.route || "/"}
-            className="fade-up group relative min-h-[138px] sm:min-h-[146px] overflow-hidden rounded-2xl border border-[#263247] bg-[linear-gradient(180deg,#0c1018,#0a0d14)] px-3.5 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#516892] hover:shadow-[0_16px_32px_rgba(10,14,22,0.85)]"
+            className="fade-up group relative min-h-[136px] sm:min-h-[144px] overflow-hidden rounded-2xl border border-[#d6e0ee] bg-[linear-gradient(180deg,#ffffff,#f8fbff)] px-3.5 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#9cb4d8] hover:shadow-[0_16px_32px_rgba(73,103,146,0.22)]"
             style={{ animationDelay: `${Math.min(idx * 40, 220)}ms` }}
           >
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[radial-gradient(circle_at_50%_0%,rgba(255,207,72,0.14),transparent_60%)]" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[radial-gradient(circle_at_50%_0%,rgba(255,182,72,0.2),transparent_62%)]" />
 
             {tool.pro ? (
-              <div className="absolute right-2 top-2 rounded bg-gradient-to-r from-[#ffcf48] to-[#ff8e3c] px-1.5 py-0.5 text-[8px] font-black text-[#07080b]">
+              <div className="absolute right-2 top-2 rounded bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] px-1.5 py-0.5 text-[8px] font-black text-[#2d1d00]">
                 PRO
               </div>
             ) : null}
 
             <div className="relative text-[22px] mb-2">{tool.emoji}</div>
-            <div className="relative text-[11px] sm:text-xs font-bold text-[#f2ede2] leading-tight">{tool.label}</div>
-            <div className="relative mt-1 text-[10px] text-[#9ca8bc] leading-tight">{tool.hint}</div>
+            <div className="relative text-[11px] sm:text-xs font-bold text-[#203450] leading-tight">{tool.label}</div>
+            <div className="relative mt-1 text-[10px] text-[#62758f] leading-tight">{tool.hint}</div>
           </Link>
         ))}
       </section>
 
-      <section className="mt-8 overflow-hidden rounded-2xl border border-[#2a3953] bg-[linear-gradient(180deg,#0b1018,#0a0d14)]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#23314a]">
+      <section className="mt-8 overflow-hidden rounded-2xl border border-[#d4deed] bg-[linear-gradient(180deg,#fbfdff,#f4f8ff)]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#d8e3f3]">
           {[
             ["🔒", "Приватно", "Файлы не покидают устройство"],
             ["⚡", "Мгновенно", "Обработка локально"],
             ["🆓", "Бесплатно", "Базовые функции бесплатно"],
             ["📱", "Везде", "Моб., планшет, ПК"],
           ].map(([icon, title, sub]) => (
-            <div key={title} className="bg-[#0b1017] p-4 text-center">
+            <div key={title} className="bg-[#f9fcff] p-4 text-center">
               <div className="text-lg mb-1">{icon}</div>
-              <div className="text-xs font-bold text-[#f1ecdf]">{title}</div>
-              <div className="text-[10px] text-[#99a4b7] font-mono leading-snug">{sub}</div>
+              <div className="text-xs font-bold text-[#203450]">{title}</div>
+              <div className="text-[10px] text-[#667a94] font-mono leading-snug">{sub}</div>
             </div>
           ))}
         </div>

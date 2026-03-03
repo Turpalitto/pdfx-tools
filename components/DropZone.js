@@ -37,17 +37,17 @@ export default function DropZone({ onFiles, accept, multi = false }) {
       onDrop={onDrop}
       className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all ${
         dragOver
-          ? "border-[#ffdc50] bg-[rgba(255,220,80,0.08)]"
-          : "border-[#2b3240] bg-[#0b0f15]"
+          ? "border-[#ffcc5a] bg-[rgba(255,198,88,0.18)]"
+          : "border-[#d0dced] bg-[linear-gradient(180deg,#ffffff,#f7fbff)]"
       }`}
     >
       <div className="text-3xl mb-2">{dragOver ? "✨" : "📂"}</div>
-      <div className="font-bold mb-1 text-[#f3edde]">{dragOver ? "Отпусти файл" : "Перетащи или выбери файл"}</div>
-      <div className="text-xs text-[#98a1af] font-mono mb-4">
+      <div className="font-bold mb-1 text-[#1e3452]">{dragOver ? "Отпусти файл" : "Перетащи или выбери файл"}</div>
+      <div className="text-xs text-[#677c96] font-mono mb-4">
         {accept === ".pdf" ? "PDF" : accept === ".pdf,image/*" ? "PDF, PNG, JPG" : "PNG, JPG, WebP"}
         {multi ? " · Несколько файлов" : " · 1 файл"}
       </div>
-      <label className="inline-block bg-[#ffdc50] text-[#070809] px-5 py-2 rounded-lg text-sm font-bold cursor-pointer hover:brightness-110 transition-all">
+      <label className="inline-block bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] text-[#2b1d00] px-5 py-2 rounded-lg text-sm font-bold cursor-pointer hover:brightness-105 transition-all shadow-[0_8px_20px_rgba(255,169,73,0.24)]">
         Выбрать файл
         <input type="file" className="hidden" accept={accept} multiple={multi} onChange={onFileSelect} />
       </label>

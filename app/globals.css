@@ -1,14 +1,14 @@
 ﻿@import "tailwindcss";
 
 :root {
-  --background: #06070a;
-  --foreground: #ece8df;
-  --muted: #9ca3b0;
-  --card: #0b0e14;
-  --border: #243047;
-  --accent: #ffcf48;
-  --accent-2: #ff8e3c;
-  --teal: #4de2c0;
+  --background: #f4f7fb;
+  --foreground: #111827;
+  --muted: #5f6c80;
+  --card: #ffffff;
+  --border: #d7e0ec;
+  --accent: #ffb648;
+  --accent-2: #ff8b43;
+  --teal: #00bfa5;
 }
 
 @theme inline {
@@ -29,15 +29,15 @@ body {
 
 body {
   background:
-    radial-gradient(circle at 15% -5%, rgba(255, 207, 72, 0.16), transparent 36%),
-    radial-gradient(circle at 90% 5%, rgba(77, 226, 192, 0.1), transparent 32%),
-    linear-gradient(180deg, #05060a 0%, #070a11 45%, #06070a 100%);
+    radial-gradient(circle at 12% -8%, rgba(255, 182, 72, 0.24), transparent 34%),
+    radial-gradient(circle at 92% 2%, rgba(0, 191, 165, 0.16), transparent 32%),
+    linear-gradient(180deg, #f8fbff 0%, #f1f5fb 46%, #edf2f9 100%);
   color: var(--foreground);
 }
 
 ::selection {
-  background: rgba(255, 207, 72, 0.28);
-  color: #fff8ea;
+  background: rgba(255, 182, 72, 0.35);
+  color: #111827;
 }
 
 @keyframes fade-up {
@@ -57,7 +57,7 @@ body {
     box-shadow: 0 0 0 rgba(255, 207, 72, 0);
   }
   50% {
-    box-shadow: 0 0 24px rgba(255, 207, 72, 0.14);
+    box-shadow: 0 0 24px rgba(255, 182, 72, 0.2);
   }
 }
 

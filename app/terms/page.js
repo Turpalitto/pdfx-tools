@@ -20,8 +20,8 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div className="max-w-[940px] mx-auto px-4 py-10">
-      <h1 className="text-3xl font-black mb-6">Условия использования</h1>
-      <div className="space-y-4 text-sm leading-7 text-[#bbb]">
+      <h1 className="text-3xl font-black text-[#1d3150] mb-6">Условия использования</h1>
+      <div className="space-y-4 text-sm leading-7 text-[#4f637f]">
         <p>
           Используя PDF X, вы соглашаетесь с этими условиями. Сервис предоставляется «как есть», без гарантий
           непрерывной или безошибочной работы.
@@ -41,7 +41,7 @@ export default function TermsPage() {
           возвратов, указанной при оформлении подписки.
         </p>
         <p>
-          По вопросам: <a className="text-[#ffdc50]" href="mailto:contact@pdfx.tools">contact@pdfx.tools</a>.
+          По вопросам: <a className="text-[#2f4668]" href="mailto:contact@pdfx.tools">contact@pdfx.tools</a>.
         </p>
       </div>
     </div>

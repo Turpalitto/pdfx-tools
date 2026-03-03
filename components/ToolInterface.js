@@ -239,13 +239,13 @@ export default function ToolInterface({ tool }) {
     <div className="max-w-2xl mx-auto py-8">
       <div className="text-center mb-8">
         <div className="text-4xl mb-3">{tool.emoji}</div>
-        <h1 className="text-2xl font-black mb-2 text-[#f3edde]">{tool.label}</h1>
-        <p className="text-[#a0a8b4]">{tool.description}</p>
-        <div className="mt-3 text-xs text-[#96a0af] font-mono">
+        <h1 className="text-2xl font-black mb-2 text-[#1d3150]">{tool.label}</h1>
+        <p className="text-[#5f738e]">{tool.description}</p>
+        <div className="mt-3 text-xs text-[#667b96] font-mono">
           {isPro ? "PRO: безлимитный доступ" : `FREE: осталось ${displayRemaining}/${FREE_OPS_PER_DAY} операций сегодня`}
         </div>
         {tool.pro && (
-          <div className="inline-flex bg-gradient-to-r from-[#ffdc50] to-[#ff8c42] text-[#070809] text-xs font-black px-3 py-1 rounded-full mt-2">
+          <div className="inline-flex bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] text-[#2d1d00] text-xs font-black px-3 py-1 rounded-full mt-2">
             PRO
           </div>
         )}
@@ -254,11 +254,11 @@ export default function ToolInterface({ tool }) {
       <DropZone onFiles={handleFiles} accept={tool.accept} multi={tool.multi} />
 
       {tool.pro && !isPro && (
-        <div className="mt-4 bg-[#121722] border border-[#2c3543] rounded-lg p-4 text-sm text-[#b6beca]">
+        <div className="mt-4 bg-[#fff8ec] border border-[#ffd69c] rounded-lg p-4 text-sm text-[#6f5727]">
           {isAuthenticated
             ? "Это PRO-функция. Оформите подписку, чтобы продолжить."
             : "Для PRO-функций требуется вход через Google и подписка."}{" "}
-          <Link href="/pricing" className="text-[#ffdc50] font-semibold">
+          <Link href="/pricing" className="text-[#b56d00] font-semibold">
             Перейти к тарифам
           </Link>
           .
@@ -267,20 +267,20 @@ export default function ToolInterface({ tool }) {
 
       {files.length > 0 && (
         <div className="mt-6">
-          <div className="text-xs font-mono text-[#8e97a6] mb-3">ФАЙЛЫ ({files.length})</div>
+          <div className="text-xs font-mono text-[#6d819c] mb-3">ФАЙЛЫ ({files.length})</div>
           <div className="space-y-2">
             {files.map((file, i) => (
-              <div key={i} className="bg-[#0c1016] border border-[#232a36] rounded-lg p-3 flex items-center gap-3">
-                <div className="text-xs font-mono bg-[rgba(255,220,80,0.12)] text-[#ffdc50] px-2 py-1 rounded border border-[rgba(255,220,80,0.2)]">
+              <div key={i} className="bg-[linear-gradient(180deg,#ffffff,#f7fbff)] border border-[#d5dfed] rounded-lg p-3 flex items-center gap-3 shadow-[0_8px_18px_rgba(76,107,153,0.08)]">
+                <div className="text-xs font-mono bg-[#fff6e6] text-[#9a6200] px-2 py-1 rounded border border-[#f4d8a7]">
                   {file.name.split(".").pop().toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold truncate">{file.name}</div>
-                  <div className="text-xs text-[#8e97a6] font-mono">{(file.size / 1024).toFixed(1)} KB</div>
+                  <div className="text-sm font-semibold text-[#20344f] truncate">{file.name}</div>
+                  <div className="text-xs text-[#7387a1] font-mono">{(file.size / 1024).toFixed(1)} KB</div>
                 </div>
                 <button
                   onClick={() => removeFile(i)}
-                  className="w-6 h-6 bg-[#171b22] border border-[#2b3240] text-[#7e8898] rounded flex items-center justify-center hover:border-[#3f4b5f] hover:text-[#c0c8d4] transition-colors"
+                  className="w-6 h-6 bg-[#f4f8ff] border border-[#d2dced] text-[#72859e] rounded flex items-center justify-center hover:border-[#afc0d8] hover:text-[#2f4668] transition-colors"
                 >
                   ×
                 </button>
@@ -291,42 +291,42 @@ export default function ToolInterface({ tool }) {
       )}
 
       {files.length > 0 && (
-        <div className="mt-6 bg-[#0c1016] border border-[#232a36] rounded-xl p-4">
-          <div className="text-xs font-mono text-[#8e97a6] mb-3">НАСТРОЙКИ</div>
-          <div className="text-sm text-[#9fa8b5]">Опции для {tool.label} будут добавлены...</div>
+        <div className="mt-6 bg-[linear-gradient(180deg,#ffffff,#f7fbff)] border border-[#d5dfed] rounded-xl p-4 shadow-[0_10px_24px_rgba(76,107,153,0.1)]">
+          <div className="text-xs font-mono text-[#6d819c] mb-3">НАСТРОЙКИ</div>
+          <div className="text-sm text-[#61748f]">Опции для {tool.label} будут добавлены...</div>
         </div>
       )}
 
       {files.length > 0 && !processing && !result && (
         <button
           onClick={convert}
-          className="w-full mt-6 bg-[#ffdc50] text-[#070809] font-black py-3 rounded-xl hover:brightness-110 transition-all"
+          className="w-full mt-6 bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] text-[#2d1d00] font-black py-3 rounded-xl hover:brightness-105 transition-all shadow-[0_10px_24px_rgba(255,170,78,0.26)]"
         >
           ⚡ ОБРАБОТАТЬ
         </button>
       )}
 
       {processing && (
-        <div className="mt-6 bg-[#0c1016] border border-[#232a36] rounded-xl p-4">
-          <div className="bg-[#121822] border border-[#232a36] rounded-lg h-2 overflow-hidden mb-3">
+        <div className="mt-6 bg-[linear-gradient(180deg,#ffffff,#f7fbff)] border border-[#d5dfed] rounded-xl p-4">
+          <div className="bg-[#eef4ff] border border-[#d4e0f0] rounded-lg h-2 overflow-hidden mb-3">
             <div
-              className="h-full bg-gradient-to-r from-[#ffdc50] to-[#ff8c42] transition-all duration-300"
+              className="h-full bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] transition-all duration-300"
               style={{ width: `${progress.pct}%` }}
             />
           </div>
-          <div className="flex justify-between text-xs text-[#8e97a6] font-mono">
+          <div className="flex justify-between text-xs text-[#6d819c] font-mono">
             <span>{progress.label}</span>
-            <span className="text-[#ffdc50] font-semibold">{progress.pct}%</span>
+            <span className="text-[#b56d00] font-semibold">{progress.pct}%</span>
           </div>
         </div>
       )}
 
       {result && !processing && (
-        <div className="mt-6 bg-[#0c1016] border border-[#1f2f26] rounded-xl p-6">
+        <div className="mt-6 bg-[linear-gradient(180deg,#ffffff,#f8fbff)] border border-[#d5dfed] rounded-xl p-6 shadow-[0_12px_30px_rgba(77,107,154,0.12)]">
           <div className="text-center mb-4">
             <div className="text-3xl mb-2">{result.icon}</div>
-            <div className="text-lg font-black mb-1">{result.title}</div>
-            <div className="text-sm text-[#a0a8b4]">{result.info}</div>
+            <div className="text-lg font-black text-[#213650] mb-1">{result.title}</div>
+            <div className="text-sm text-[#62758f]">{result.info}</div>
           </div>
 
           {result.downloads?.length > 0 && (
@@ -337,8 +337,8 @@ export default function ToolInterface({ tool }) {
                   onClick={download.action}
                   className={`w-full py-2 rounded-lg font-semibold transition-all ${
                     download.sec
-                      ? "bg-[#0f0f0f] text-[#e8e3db] border border-[#1a1a1a] hover:border-[#2a2a2a]"
-                      : "bg-[#00d68f] text-[#070809] hover:brightness-110"
+                      ? "bg-[#f3f7ff] text-[#2b4366] border border-[#ced8ea] hover:border-[#b0c0d8]"
+                      : "bg-[#00c7a0] text-[#052e27] hover:brightness-105"
                   }`}
                 >
                   {download.label}
@@ -351,21 +351,21 @@ export default function ToolInterface({ tool }) {
             <button
               type="button"
               onClick={handleSignIn}
-              className="w-full mt-4 inline-flex items-center justify-center bg-gradient-to-r from-[#56a8ff] to-[#4de2c0] text-[#070809] py-2 rounded-lg font-bold"
+              className="w-full mt-4 inline-flex items-center justify-center bg-gradient-to-r from-[#67b7ff] to-[#5be7c8] text-[#082b32] py-2 rounded-lg font-bold"
             >
               Войти через Google
             </button>
           ) : result.action === "pricing" ? (
             <Link
               href="/pricing"
-              className="w-full mt-4 inline-flex items-center justify-center bg-gradient-to-r from-[#ffdc50] to-[#ff8c42] text-[#070809] py-2 rounded-lg font-bold"
+              className="w-full mt-4 inline-flex items-center justify-center bg-gradient-to-r from-[#ffcc4f] to-[#ff9c4d] text-[#2d1d00] py-2 rounded-lg font-bold"
             >
               Открыть PRO
             </Link>
           ) : (
             <button
               onClick={reset}
-              className="w-full mt-4 bg-[#0f0f0f] text-[#97a0ad] py-2 rounded-lg hover:text-[#e8e3db] transition-colors"
+              className="w-full mt-4 bg-[#f1f6ff] border border-[#d0dbeb] text-[#5f738f] py-2 rounded-lg hover:text-[#2b4366] transition-colors"
             >
               ↩ Новая операция
             </button>
@@ -375,4 +375,3 @@ export default function ToolInterface({ tool }) {
     </div>
   );
 }
-
