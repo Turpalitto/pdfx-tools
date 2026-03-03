@@ -1,11 +1,14 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useState, useCallback, useMemo } from "react";
 import DropZone from "./DropZone";
 import { FREE_OPS_PER_DAY } from "../lib/tools-config";
+import { useAuth } from "@/hooks/useAuth";
 
 const USAGE_KEY = "pdfx_free_usage";
+const AUTH_REQUIRED_FOR_PRO = process.env.NEXT_PUBLIC_AUTH_REQUIRED_FOR_PRO !== "false";
+const HARD_GATING = process.env.NEXT_PUBLIC_HARD_GATING !== "false";
 
 function getTodayKey() {
   const now = new Date();
@@ -37,7 +40,14 @@ export default function ToolInterface({ tool }) {
   const [result, setResult] = useState(null);
   const [usage, setUsageState] = useState(() => getUsage().count);
 
-  const remaining = useMemo(() => Math.max(0, FREE_OPS_PER_DAY - usage), [usage]);
+  const { isAuthenticated, isPro, entitlements, getIdToken, refreshEntitlements, signInWithGoogle } = useAuth();
+
+  const guestRemaining = useMemo(() => Math.max(0, FREE_OPS_PER_DAY - usage), [usage]);
+  const displayRemaining = isAuthenticated
+    ? isPro
+      ? "∞"
+      : Math.max(0, Number(entitlements.remainingToday ?? FREE_OPS_PER_DAY))
+    : guestRemaining;
 
   const handleFiles = useCallback(
     (newFiles) => {
@@ -61,70 +71,168 @@ export default function ToolInterface({ tool }) {
     setResult(null);
   };
 
-  const convert = async () => {
-    if (!files.length) return;
-
-    if (tool.pro) {
-      setResult({
-        icon: "🔒",
-        title: "PRO инструмент",
-        info: "Этот инструмент доступен только в подписке PDF X PRO.",
-        downloads: [],
-      });
-      return;
-    }
-
-    const currentUsage = getUsage().count;
-    if (currentUsage >= FREE_OPS_PER_DAY) {
-      setResult({
-        icon: "⚠️",
-        title: "Лимит исчерпан",
-        info: `Доступно ${FREE_OPS_PER_DAY} бесплатных операций в день. Оформите PRO для безлимита.`,
-        downloads: [],
-      });
-      return;
-    }
-
+  const runMockProcessing = async () => {
     setProcessing(true);
     setProgress({ pct: 0, label: "Подготовка..." });
     setResult(null);
 
-    try {
-      for (let i = 0; i <= 100; i += 10) {
-        setProgress({ pct: i, label: `Обработка... ${i}%` });
-        await new Promise((resolve) => setTimeout(resolve, 100));
+    for (let i = 0; i <= 100; i += 10) {
+      setProgress({ pct: i, label: `Обработка... ${i}%` });
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    setProcessing(false);
+    setProgress({ pct: 0, label: "" });
+  };
+
+  const consumeServerQuota = async () => {
+    const token = await getIdToken();
+    if (!token) {
+      return {
+        ok: false,
+        error: "Не удалось получить токен авторизации. Выполните вход заново.",
+      };
+    }
+
+    const res = await fetch("/api/usage/consume", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ toolId: tool.id }),
+    });
+    const data = await res.json();
+
+    if (!res.ok || data?.error) {
+      return {
+        ok: false,
+        error: data?.error?.message || "Функция временно недоступна. Попробуйте позже.",
+      };
+    }
+
+    return { ok: true, data };
+  };
+
+  const consumeGuestQuota = () => {
+    const currentUsage = getUsage().count;
+    if (currentUsage >= FREE_OPS_PER_DAY) {
+      return { ok: false, reason: "limit_exceeded", remaining: 0 };
+    }
+
+    const nextUsage = currentUsage + 1;
+    setUsage(nextUsage);
+    setUsageState(nextUsage);
+
+    return {
+      ok: true,
+      remaining: Math.max(0, FREE_OPS_PER_DAY - nextUsage),
+    };
+  };
+
+  const convert = async () => {
+    if (!files.length) return;
+
+    if (tool.pro) {
+      if (!isAuthenticated && AUTH_REQUIRED_FOR_PRO && HARD_GATING) {
+        setResult({
+          icon: "🔐",
+          title: "Требуется вход",
+          info: "Для PRO-инструментов нужно войти через Google и оформить подписку.",
+          action: "signin",
+        });
+        return;
       }
 
-      const nextUsage = currentUsage + 1;
-      setUsage(nextUsage);
-      setUsageState(nextUsage);
+      if (!isPro && HARD_GATING) {
+        setResult({
+          icon: "🔒",
+          title: "PRO инструмент",
+          info: "Этот инструмент доступен только в подписке PDF X PRO.",
+          action: "pricing",
+        });
+        return;
+      }
+    }
+
+    if (isAuthenticated) {
+      const quota = await consumeServerQuota();
+      if (!quota.ok) {
+        setResult({
+          icon: "⚠️",
+          title: "Функция недоступна",
+          info: quota.error,
+          action: isPro ? undefined : "pricing",
+        });
+        return;
+      }
+
+      if (!quota.data.allowed) {
+        setResult({
+          icon: "⚠️",
+          title: "Лимит исчерпан",
+          info: `Дневной лимит достигнут. Оформите PRO для безлимита.`,
+          action: "pricing",
+        });
+        return;
+      }
+
+      await runMockProcessing();
+      await refreshEntitlements();
 
       setResult({
         icon: "✅",
         title: "Готово!",
-        info: `${files.length} файлов обработано. Осталось ${Math.max(0, FREE_OPS_PER_DAY - nextUsage)} операций сегодня.`,
+        info: `${files.length} файлов обработано.`,
+        remainingToday: quota.data.remainingToday,
         downloads: files.map((f) => ({
           label: `Скачать ${f.name}`,
           action: () => console.log("Download:", f.name),
         })),
       });
-    } catch (error) {
-      console.error("Error:", error);
-      setResult({
-        icon: "❌",
-        title: "Ошибка",
-        info: error.message,
-        downloads: [],
-      });
-    } finally {
-      setProcessing(false);
-      setProgress({ pct: 0, label: "" });
+      return;
     }
+
+    const guestQuota = consumeGuestQuota();
+    if (!guestQuota.ok && HARD_GATING) {
+      setResult({
+        icon: "⚠️",
+        title: "Лимит исчерпан",
+        info: `Доступно ${FREE_OPS_PER_DAY} бесплатных операций в день. Оформите PRO для безлимита.`,
+        action: "pricing",
+      });
+      return;
+    }
+
+    await runMockProcessing();
+
+    setResult({
+      icon: "✅",
+      title: "Готово!",
+      info: `${files.length} файлов обработано. Осталось ${guestQuota.remaining ?? guestRemaining} операций сегодня.`,
+      downloads: files.map((f) => ({
+        label: `Скачать ${f.name}`,
+        action: () => console.log("Download:", f.name),
+      })),
+    });
   };
 
   const reset = () => {
     setResult(null);
     setProgress({ pct: 0, label: "" });
+  };
+
+  const handleSignIn = async () => {
+    const authResult = await signInWithGoogle();
+    if (!authResult.ok) {
+      setResult({
+        icon: "⚠️",
+        title: "Не удалось войти",
+        info: authResult.error || "Ошибка авторизации через Google.",
+      });
+      return;
+    }
+    setResult(null);
   };
 
   return (
@@ -133,7 +241,9 @@ export default function ToolInterface({ tool }) {
         <div className="text-4xl mb-3">{tool.emoji}</div>
         <h1 className="text-2xl font-black mb-2 text-[#f3edde]">{tool.label}</h1>
         <p className="text-[#a0a8b4]">{tool.description}</p>
-        <div className="mt-3 text-xs text-[#96a0af] font-mono">FREE: осталось {remaining}/{FREE_OPS_PER_DAY} операций сегодня</div>
+        <div className="mt-3 text-xs text-[#96a0af] font-mono">
+          {isPro ? "PRO: безлимитный доступ" : `FREE: осталось ${displayRemaining}/${FREE_OPS_PER_DAY} операций сегодня`}
+        </div>
         {tool.pro && (
           <div className="inline-flex bg-gradient-to-r from-[#ffdc50] to-[#ff8c42] text-[#070809] text-xs font-black px-3 py-1 rounded-full mt-2">
             PRO
@@ -143,9 +253,15 @@ export default function ToolInterface({ tool }) {
 
       <DropZone onFiles={handleFiles} accept={tool.accept} multi={tool.multi} />
 
-      {tool.pro && (
+      {tool.pro && !isPro && (
         <div className="mt-4 bg-[#121722] border border-[#2c3543] rounded-lg p-4 text-sm text-[#b6beca]">
-          Это PRO-функция. <Link href="/pricing" className="text-[#ffdc50] font-semibold">Перейти к тарифам</Link>.
+          {isAuthenticated
+            ? "Это PRO-функция. Оформите подписку, чтобы продолжить."
+            : "Для PRO-функций требуется вход через Google и подписка."}{" "}
+          <Link href="/pricing" className="text-[#ffdc50] font-semibold">
+            Перейти к тарифам
+          </Link>
+          .
         </div>
       )}
 
@@ -231,7 +347,15 @@ export default function ToolInterface({ tool }) {
             </div>
           )}
 
-          {tool.pro || result.title === "Лимит исчерпан" ? (
+          {result.action === "signin" ? (
+            <button
+              type="button"
+              onClick={handleSignIn}
+              className="w-full mt-4 inline-flex items-center justify-center bg-gradient-to-r from-[#56a8ff] to-[#4de2c0] text-[#070809] py-2 rounded-lg font-bold"
+            >
+              Войти через Google
+            </button>
+          ) : result.action === "pricing" ? (
             <Link
               href="/pricing"
               className="w-full mt-4 inline-flex items-center justify-center bg-gradient-to-r from-[#ffdc50] to-[#ff8c42] text-[#070809] py-2 rounded-lg font-bold"
@@ -251,3 +375,4 @@ export default function ToolInterface({ tool }) {
     </div>
   );
 }
+
