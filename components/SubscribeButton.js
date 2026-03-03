@@ -1,25 +1,47 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SubscribeButton() {
   const [loading, setLoading] = useState(false);
+  const { isAuthenticated, signInWithGoogle, getIdToken } = useAuth();
 
   const handleCheckout = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/checkout", { method: "POST" });
+
+      if (!isAuthenticated) {
+        const authResult = await signInWithGoogle();
+        if (!authResult.ok) {
+          throw new Error(authResult.error || "Требуется вход через Google.");
+        }
+      }
+
+      const token = await getIdToken();
+      if (!token) {
+        throw new Error("Не удалось получить токен авторизации. Попробуйте снова.");
+      }
+
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Checkout is unavailable");
+        const msg = data?.error?.message || data?.error || "Checkout недоступен.";
+        throw new Error(msg);
       }
 
       if (data.url) {
         window.location.href = data.url;
       }
     } catch (error) {
-      alert(error.message || "Checkout is unavailable right now.");
+      const message = error instanceof Error ? error.message : "Checkout недоступен.";
+      alert(message);
     } finally {
       setLoading(false);
     }
@@ -36,3 +58,4 @@ export default function SubscribeButton() {
     </button>
   );
 }
+
