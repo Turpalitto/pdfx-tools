@@ -23,7 +23,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="max-w-[1040px] mx-auto px-4 sm:px-5">
+    <div className="max-w-[1280px] mx-auto px-4 sm:px-8">
       <ToolPage />
     </div>
   );

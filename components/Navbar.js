@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="mx-auto max-w-[1100px] px-4 pt-3 sm:px-5">
+      <div className="mx-auto max-w-[1280px] px-4 pt-3 sm:px-5">
         <div className="rounded-2xl border border-[#d4dff0] bg-[rgba(255,255,255,0.92)] backdrop-blur-xl shadow-[0_8px_32px_rgba(46,72,109,0.10)]">
           <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
 

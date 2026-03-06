@@ -33,6 +33,14 @@ function setUsage(count) {
   localStorage.setItem(USAGE_KEY, JSON.stringify({ date: getTodayKey(), count }));
 }
 
+function buildDownloadName(fileName, toolId) {
+  const dotIdx = fileName.lastIndexOf(".");
+  if (dotIdx <= 0) return `${fileName}-${toolId}`;
+  const base = fileName.slice(0, dotIdx);
+  const ext = fileName.slice(dotIdx);
+  return `${base}-${toolId}${ext}`;
+}
+
 export default function ToolInterface({ tool }) {
   const [files, setFiles] = useState([]);
   const [processing, setProcessing] = useState(false);
@@ -187,7 +195,7 @@ export default function ToolInterface({ tool }) {
         remainingToday: quota.data.remainingToday,
         downloads: files.map((f) => ({
           label: `Скачать ${f.name}`,
-          action: () => console.log("Download:", f.name),
+          action: () => downloadMockFile(f),
         })),
       });
       return;
@@ -212,7 +220,7 @@ export default function ToolInterface({ tool }) {
       info: `${files.length} файлов обработано. Осталось ${guestQuota.remaining ?? guestRemaining} операций сегодня.`,
       downloads: files.map((f) => ({
         label: `Скачать ${f.name}`,
-        action: () => console.log("Download:", f.name),
+        action: () => downloadMockFile(f),
       })),
     });
   };
@@ -234,6 +242,20 @@ export default function ToolInterface({ tool }) {
     }
     setResult(null);
   };
+
+  const downloadMockFile = useCallback(
+    (file) => {
+      const objectUrl = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = buildDownloadName(file.name, tool.id || "processed");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    },
+    [tool.id]
+  );
 
   return (
     <div className="max-w-2xl mx-auto py-8">

@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="mt-12 border-t border-[#d6dfee] bg-[linear-gradient(180deg,rgba(255,255,255,0.62),rgba(243,248,255,0.9))] py-9">
-      <div className="mx-auto max-w-[1100px] px-4 sm:px-5">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-5">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="text-sm text-[#647790]">PDF X © {new Date().getFullYear()} · Бесплатные инструменты для PDF</div>
 
