@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -6,6 +6,9 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AppProviders from "../components/AppProviders";
+import { TOOLS } from "../lib/tools-config";
+
+const TOTAL_TOOLS = TOOLS.length;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,14 +42,14 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     siteName: "PDF X",
     title: "PDF X - Бесплатные онлайн-инструменты для PDF",
-    description: "Сжимай, объединяй и конвертируй PDF в браузере. Быстро и конфиденциально.",
+    description: `${TOTAL_TOOLS} инструментов для работы с PDF в браузере. Быстро и конфиденциально.`,
     url: "https://pdfx.tools",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "PDF X - Бесплатные онлайн-инструменты для PDF",
-    description: "12 инструментов для работы с PDF прямо в браузере.",
+    description: `${TOTAL_TOOLS} инструментов для работы с PDF прямо в браузере.`,
     images: ["/opengraph-image"],
   },
   alternates: {
@@ -68,7 +71,7 @@ export default function RootLayout({
 
   return (
     <html lang="ru">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-[#111827] min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen text-[#111827] antialiased`}>
         <AppProviders>
           <Navbar />
           <main className="min-h-screen">{children}</main>

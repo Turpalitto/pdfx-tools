@@ -1,4 +1,7 @@
-﻿import ToolPage from "../components/ToolPage";
+import ToolPage from "../components/ToolPage";
+import { TOOLS } from "../lib/tools-config";
+
+const TOTAL_TOOLS = TOOLS.length;
 
 export const metadata = {
   title: "PDF X - Бесплатные онлайн-инструменты для PDF",
@@ -10,20 +13,20 @@ export const metadata = {
     type: "website",
     url: "https://pdfx.tools",
     title: "PDF X - Бесплатные онлайн-инструменты для PDF",
-    description: "12 инструментов для PDF: сжатие, объединение, конвертация, OCR и другое.",
+    description: `${TOTAL_TOOLS} инструментов для PDF: сжатие, объединение, конвертация, OCR и другое.`,
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "PDF X - Бесплатные онлайн-инструменты для PDF",
-    description: "12 инструментов для PDF прямо в браузере.",
+    description: `${TOTAL_TOOLS} инструментов для PDF прямо в браузере.`,
     images: ["/opengraph-image"],
   },
 };
 
 export default function Home() {
   return (
-    <div className="max-w-[1280px] mx-auto px-4 sm:px-8">
+    <div className="mx-auto max-w-[1280px] px-4 sm:px-8">
       <ToolPage />
     </div>
   );
