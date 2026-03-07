@@ -4,25 +4,34 @@ export default function FAQ({ items }) {
   if (!items?.length) return null;
 
   return (
-    <section className="fade-up mt-8">
-      <div className="mb-5 flex items-center gap-3">
-        <h2 className="text-xl font-black text-[#1a2b45] sm:text-2xl">Частые вопросы</h2>
-        <div className="h-px flex-1 bg-gradient-to-r from-[#dce6f5] to-transparent" />
+    <section className="mt-12">
+      <div className="mb-6 flex items-center gap-4">
+        <h2 className="text-xl font-black" style={{ color: "#0f172a" }}>Частые вопросы</h2>
+        <div className="h-px flex-1" style={{ background: "linear-gradient(to right, #e2e8f0, transparent)" }} />
       </div>
 
-      <div className="space-y-2.5">
+      <div className="space-y-2">
         {items.map((item, i) => (
           <details
             key={i}
-            className="group overflow-hidden rounded-2xl border border-[#dbe5f3] bg-white transition-all duration-200 hover:border-[#c4d5eb] hover:shadow-[0_4px_16px_rgba(60,90,140,0.08)]"
+            className="group overflow-hidden rounded-2xl bg-white transition-all duration-200"
+            style={{ border: "1.5px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#c7d7ed"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(15,23,42,0.07)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.04)"; }}
           >
-            <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 text-sm font-semibold text-[#1e3350] transition-colors select-none hover:text-[#0f1f3a]">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[13.5px] font-semibold select-none"
+              style={{ color: "#1e293b" }}>
               <span>{item.question}</span>
-              <span className="ml-4 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-[#d5e0f0] bg-[#f4f8ff] text-xs text-[#7a90a8] transition-all duration-200 group-open:rotate-180 group-open:border-[#ffb648] group-open:bg-[#fff8eb] group-open:text-[#b87a00]">
-                ▾
+              <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full transition-all duration-200 group-open:rotate-180"
+                style={{ background: "#f1f5f9", color: "#64748b" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
               </span>
             </summary>
-            <div className="border-t border-[#eaf0f9] px-5 py-4 text-sm leading-relaxed text-[#5d718c]">{item.answer}</div>
+            <div className="border-t px-5 py-4 text-sm leading-relaxed" style={{ borderColor: "#f1f5f9", color: "#64748b" }}>
+              {item.answer}
+            </div>
           </details>
         ))}
       </div>
