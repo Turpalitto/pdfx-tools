@@ -26,7 +26,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-[1280px] px-4 sm:px-8">
+    <div className="mx-auto max-w-[1280px] overflow-hidden px-4 sm:px-8">
       <ToolPage />
     </div>
   );
